@@ -25,9 +25,26 @@ class elements:
         self.name = name
         self.atomic_number = atomic_num
         self.symbol = symbol
+        self.weight = weight
         self.column = col
         self.row = row
     def draw_element(self):
+        # element colours shown on table
+        type_colours = {
+            "Alkali Metal": RED, 
+            "Alkaline Earth Metal": ORANGE,
+            "Transition Metal": YELLOW,
+            "Nonmetal": "",
+            "Halogen": VIOLET,
+            "Noble Gas": PURPLE,
+            "Lanthanide": PINK,
+            "Actinide": "", 
+            "Metalloid": "", 
+            "Reactive Nonmetals": "", 
+            "Unknown Properties": "", 
+            }  
+        pygame.draw.rect(screen, type_colours["Alkali Metal"], pygame.Rect(30, 30, 60, 60))
+        pygame.display.flip()
         pass
 
 # screen
@@ -40,23 +57,9 @@ screen.blit(background, (0, 0))
 '''
 pygame.display.flip() # update full display to screen
 
-'''
-# metal colours shown on table
-type_colours = {
-    "Alkali Metal": "", 
-    "Alkaline Earth Metal": "",
-    "Transition Metal": "",
-    "Nonmetal": "",
-    "Halogen": "",
-    "Noble Gas": "",
-    "Lanthanide": "",
-    "Actinide": "", 
-    "Metalloid": "", 
-    "Reactive Nonmetals": "", 
-    "Unknown Properties": "", 
-    }  
-'''
 
+hydrogen = elements("hydrogen", 1, 1, 1, 1, 1)
+hydrogen.draw_element()
 
 # keep game loop running
 running = True
