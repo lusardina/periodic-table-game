@@ -2,11 +2,11 @@ import csv
 
 elements_data = {}
 
-with open("data_elements.csv") as file:
-    for i in csv.DictReader(file):
-        elements_data[i["Element"]] = dict(i) # adds each row of CSV file into the dictionary "elements_data"
+with open("data_elements.csv") as file_data_elements:
+    for line in csv.DictReader(file_data_elements):
+        elements_data[line["Element"]] = dict(line) # adds each row of CSV file into the dictionary "elements_data"
 
-# print(elements_data) # it works!!!
+print(elements_data) # it works!!!
 
 """
 element = input("What element do you want to access? ").title()
