@@ -1,5 +1,6 @@
 import pygame
 import csv
+from data_to_dict import elements_data
 
 # colours
 BLUE = (0,128,255)
@@ -10,6 +11,10 @@ ORANGE = (255,179,71)
 CREAM = (255,247,230)
 VIOLET = (203,153,201)
 PINK = (244,154,194)
+GREY = (132,132,130)
+EMERALD = (49,145,119)
+DARK_PINK = (171,39,79)
+TEAL = (0,128,128)
 
 '''
 def element_file(file="data_elements.csv"):
@@ -21,27 +26,28 @@ def element_file(file="data_elements.csv"):
 '''
 
 class elements:
-    def __init__(self, name, atomic_num, symbol, weight, col, row):
-        self.name = name
-        self.atomic_number = atomic_num
-        self.symbol = symbol
-        self.weight = weight
-        self.column = col
-        self.row = row
+    def __init__(self, element_name, data): # data is dictionary of elements.
+        element_data = data[element_name]
+        self.name = elements_data
+        self.atomic_number = element_data["AtomicNumber"]
+        self.symbol = element_data["Symbol"]
+        self.column = element_data["Group"]
+        self.row = element_data["Period"]
     def draw_element(self):
         # element colours shown on table
+        print(self.symbol)
         type_colours = {
             "Alkali Metal": RED, 
             "Alkaline Earth Metal": ORANGE,
             "Transition Metal": YELLOW,
-            "Nonmetal": "",
+            "Nonmetal": BLUE,
             "Halogen": VIOLET,
             "Noble Gas": PURPLE,
             "Lanthanide": PINK,
-            "Actinide": "", 
-            "Metalloid": "", 
-            "Reactive Nonmetals": "", 
-            "Unknown Properties": "", 
+            "Actinide": TEAL, 
+            "Metalloid": DARK_PINK, 
+            "Reactive Nonmetals": EMERALD, 
+            "Unknown Properties": GREY, 
             }  
         pygame.draw.rect(screen, type_colours["Alkali Metal"], pygame.Rect(30, 30, 60, 60))
         pygame.display.flip()
@@ -58,7 +64,7 @@ screen.blit(background, (0, 0))
 pygame.display.flip() # update full display to screen
 
 
-hydrogen = elements("hydrogen", 1, 1, 1, 1, 1)
+hydrogen = elements("Hydrogen", elements_data)
 hydrogen.draw_element()
 
 # keep game loop running
