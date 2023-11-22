@@ -1,11 +1,13 @@
 import csv
 
-elements_data = {}
+def csv_to_dict():
+    elements_data = {}
+    with open("data_elements.csv") as file_data_elements:
+        for line in csv.DictReader(file_data_elements):
+            elements_data[line["Element"]] = line # adds each row of CSV file into the dictionary "elements_data"
+    return elements_data
 
-with open("data_elements.csv") as file_data_elements:
-    for line in csv.DictReader(file_data_elements):
-        elements_data[line["Element"]] = line # adds each row of CSV file into the dictionary "elements_data"
-
+elements_data = csv_to_dict()
 # print(elements_data) # it works!!!
 
 """
