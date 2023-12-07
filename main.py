@@ -33,6 +33,7 @@ class elements:
         self.symbol = element_data["Symbol"]
         self.column = element_data["Group"]
         self.row = element_data["Period"]
+        self.type = element_data["Type"]
     def draw_element(self):
         # element colours shown on table
         print(self.symbol)
@@ -49,7 +50,7 @@ class elements:
             "Reactive Nonmetals": EMERALD, 
             "Unknown Properties": GREY, 
             }  
-        pygame.draw.rect(screen, type_colours["Alkali Metal"], pygame.Rect(30, 30, 60, 60))
+        pygame.draw.rect(screen, type_colours[self.type], pygame.Rect(30, 30, 60, 60))
         pygame.display.flip()
         pass
 
@@ -57,10 +58,11 @@ class elements:
 screen = pygame.display.set_mode((1100, 713))
 pygame.display.set_caption("Periodic Table Game - Lucia. S") # screen caption
 screen.fill(CREAM) 
-'''
+
+
 background = pygame.image.load('periodic-table2.jpg') # background picture of a periodic table
 screen.blit(background, (0, 0)) 
-'''
+
 pygame.display.flip() # update full display to screen
 
 

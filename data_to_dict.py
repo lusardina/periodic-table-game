@@ -10,7 +10,7 @@ def csv_to_dict():
 elements_data = csv_to_dict()
 # print(elements_data) # it works!!!
 
-
+"""
 element = input("What element do you want to access? ").title()
 while True:
     what_data = input(f"What would you like to know about the element {element}? ('nothing' to finish; 'list' to print possible properties ): ")
@@ -24,3 +24,4 @@ while True:
         answer = elements_data[element][what_data]
         print(f"The {what_data} of {element} is {answer}!")
 
+"""
