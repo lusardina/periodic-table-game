@@ -13,19 +13,23 @@ CREAM = (255,247,230)
 VIOLET = (203,153,201)
 PINK = (244,154,194)
 GREY = (132,132,130)
+BLACK = (0, 0, 0)
+DARK_GREY = (85,85,85)
 EMERALD = (49,145,119)
 DARK_PINK = (171,39,79)
 TEAL = (0,128,128)
+
+# other constants
+FONT = pygame.font.Font('freesansbold.ttf', 16)
 WIDTH = 800
 HEIGHT = 600
 
 # screen
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Periodic Table Game - Lucia. S") # screen caption
-SCREEN.fill(CREAM) 
 
-# other constants
-FONT = pygame.font.Font('freesansbold.ttf', 16)
+
+
 
 '''
 def element_file(file="data_elements.csv"):
@@ -45,8 +49,8 @@ class Element:
         self.column = element_data["Group"]
         self.row = element_data["Period"]
         self.type = element_data["Type"]
-        self.width = WIDTH / 18
-        self.height = HEIGHT / 9
+        self.width = WIDTH / 17
+        self.height = HEIGHT / 7
         self.drawable = True
         if self.column == "":
             self.drawable = False
@@ -86,6 +90,11 @@ class Element:
         # print(self.x_pos, self.y_pos, self.width, self.height)
         SCREEN.blit(FONT.render(self.atomic_number, True, 'black'), (self.x_pos + 5, self.y_pos + 5))
         SCREEN.blit(FONT.render(self.symbol, True, 'black'), (self.x_pos + 5, self.y_pos + 20))
+
+    def draw_info_box(self):
+        pygame.draw.rect(SCREEN, GREY, pygame.Rect(self.width * 3, self.height * 0.5, self.width * 8, self.height * 2))
+        pygame.draw.rect(SCREEN, BLACK, pygame.Rect(self.width * 3, self.height * 1.5, self.width * 8, self.height * 0.8))
+        pygame.draw.rect(SCREEN, DARK_GREY, pygame.Rect(self.width * 3, self.height * 0.5, self.width * 8, self.height * 2))
         
          
 
@@ -96,7 +105,7 @@ background = pygame.image.load('periodic-table2.jpg') # background picture of a 
 screen.blit(background, (0, 0)) 
 """
 
-pygame.display.flip() # update full display to screen
+
 
 
 #hydrogen = elements("Carbon", elements_data)
@@ -109,27 +118,30 @@ for e in elements_data:
     if element.drawable:
         elements.append(element)
 
-# Draws periodic table
-for element in elements: 
-    element.draw_element()
-pygame.display.flip()
+
 
 # keep game loop running
 running = True
 # game loop 
 while running: 
-    
-# gets events (actions)   
+    # gets events (actions)   
     for event in pygame.event.get(): 
         # check if someone close window (QUIT action)       
         if event.type == pygame.QUIT: 
             running = False
+    
+    SCREEN.fill(CREAM)    
+    # Draws periodic table
+    for element in elements: 
+        element.draw_element()
+    
+    # Checks if mouse has hit an element
+    mouse_pos = pygame.mouse.get_pos()
+    for element in elements:
+        if pygame.Rect.collidepoint(element.hitbox, mouse_pos[0], mouse_pos[1]):
+            highlight = True
+            element.draw_info_box()
 
-        # Checks if mouse has hit an element
-        mouse_pos = pygame.mouse.get_pos()
-        for element in elements:
-            if pygame.Rect.collidepoint(element.hitbox, mouse_pos[0], mouse_pos[1]):
-                print(element.symbol)
-
+    pygame.display.flip()
        
         
