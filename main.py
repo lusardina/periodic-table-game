@@ -36,7 +36,7 @@ def element_file(file="data_elements.csv"):
             print(', '.join(row))
 '''
 
-class elements:
+class Element:
     def __init__(self, element_name, data): # data is dictionary of elements.
         element_data = data[element_name]
         self.name = elements_data
@@ -56,6 +56,8 @@ class elements:
         else:
             self.x_pos = (int(self.column) - 2) * self.width
         self.y_pos = (int(self.row) - 2) * self.height + self.height
+        self.hitbox = pygame.Rect(self.x_pos, self.y_pos, self.width, self.height)
+
 
     def draw_element(self):
         # element colours shown on table
@@ -78,9 +80,9 @@ class elements:
             }  
         # print(self.drawable)
         if self.type in type_colours:
-            pygame.draw.rect(SCREEN, type_colours[self.type], pygame.Rect(self.x_pos, self.y_pos, self.width, self.height))
+            pygame.draw.rect(SCREEN, type_colours[self.type], self.hitbox)
         else:
-            pygame.draw.rect(SCREEN, GREY, pygame.Rect(self.x_pos, self.y_pos, self.width, self.height))
+            pygame.draw.rect(SCREEN, GREY, self.hitbox)
         # print(self.x_pos, self.y_pos, self.width, self.height)
         SCREEN.blit(FONT.render(self.atomic_number, True, 'black'), (self.x_pos + 5, self.y_pos + 5))
         SCREEN.blit(FONT.render(self.symbol, True, 'black'), (self.x_pos + 5, self.y_pos + 20))
@@ -100,10 +102,18 @@ pygame.display.flip() # update full display to screen
 #hydrogen = elements("Carbon", elements_data)
 #hydrogen.draw_element()
 
+# Creates objects of elements and puts them in a list
+elements = []
 for e in elements_data:
-    element = elements(e, elements_data)
+    element = Element(e, elements_data)
+    if element.drawable:
+        elements.append(element)
+
+# Draws periodic table
+for element in elements: 
     element.draw_element()
 pygame.display.flip()
+
 # keep game loop running
 running = True
 # game loop 
@@ -114,3 +124,12 @@ while running:
         # check if someone close window (QUIT action)       
         if event.type == pygame.QUIT: 
             running = False
+
+        # Checks if mouse has hit an element
+        mouse_pos = pygame.mouse.get_pos()
+        for element in elements:
+            if pygame.Rect.collidepoint(element.hitbox, mouse_pos[0], mouse_pos[1]):
+                print(element.symbol)
+
+       
+        
