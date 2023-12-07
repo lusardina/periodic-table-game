@@ -55,7 +55,7 @@ class elements:
             self.x_pos = (int(self.column) - 1) * self.width
         else:
             self.x_pos = (int(self.column) - 2) * self.width
-        self.y_pos = (int(self.row) - 2) * self.height
+        self.y_pos = (int(self.row) - 2) * self.height + self.height
 
     def draw_element(self):
         # element colours shown on table
@@ -84,9 +84,8 @@ class elements:
         # print(self.x_pos, self.y_pos, self.width, self.height)
         SCREEN.blit(FONT.render(self.atomic_number, True, 'black'), (self.x_pos + 5, self.y_pos + 5))
         SCREEN.blit(FONT.render(self.symbol, True, 'black'), (self.x_pos + 5, self.y_pos + 20))
-        pygame.display.flip()
-        return
         
+         
 
 
 
@@ -104,6 +103,7 @@ pygame.display.flip() # update full display to screen
 for e in elements_data:
     element = elements(e, elements_data)
     element.draw_element()
+pygame.display.flip()
 # keep game loop running
 running = True
 # game loop 
